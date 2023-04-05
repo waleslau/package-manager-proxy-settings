@@ -286,7 +286,16 @@ $ sudo systemctl daemon-reload
 $ sudo systemctl restart docker
 ```
 
-必须是socks5，http不生效
+~~必须是socks5，http不生效~~ 修正：ALL_PROXY 后面只能跟 socks5，http_proxy 或 https_proxy 貌似没要求。  
+另：可以在此同时配置多个代理相关环境变量
+
+```bash
+# TODO：有时间测试一下这几种不同的配置
+sudo mkdir -p /etc/systemd/system/docker.service.d
+echo'
+[Service]
+Environment="ALL_PROXY=socks5h://localhost:7890 http_proxy=http://localhost:7890 https_proxy=http://localhost:7890"' | sudo tee proxy.conf
+```
 
 ## Electron Dev Dependency
 设置环境变量
